@@ -33,13 +33,14 @@ public class BaseController {
         if(!pageCacheEnable) {
             return tplName;
         }
-        //取缓存
+        /* 直接从redis取html缓存
+         * 网站页面缓存有效时间在一分钟之内是可以接受的 */
         String html = redisService.get(prefix, key, String.class);
         if(!StringUtils.isEmpty(html)) {
             out(response, html);
             return null;
         }
-        //手动渲染
+        /* 如果没有缓存则手动渲染数据 */
         WebContext ctx = new WebContext(request,response,
                 request.getServletContext(),request.getLocale(), model.asMap());
         html = thymeleafViewResolver.getTemplateEngine().process(tplName, ctx);

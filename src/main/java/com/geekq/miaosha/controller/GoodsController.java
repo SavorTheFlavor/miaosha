@@ -56,6 +56,7 @@ public class GoodsController extends BaseController {
         model.addAttribute("user", user);
         List<GoodsVo> goodsList = goodsService.listGoodsVo();
         model.addAttribute("goodsList", goodsList);
+        //直接取缓存或渲染页面
         return render(request,response,model,"goods_list",GoodsKey.getGoodsList,"");
     }
 
