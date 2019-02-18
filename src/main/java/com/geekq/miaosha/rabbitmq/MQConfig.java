@@ -9,7 +9,6 @@ import java.util.Map;
 
 @Configuration
 public class MQConfig {
-
 	/**
 	 * /usr/sbin/rabbitmq-plugins enable rabbitmq_management
 	 * mq页面

@@ -22,7 +22,6 @@ import java.io.IOException;
 
 @Service
 public class MQReceiver {
-
 		private static Logger log = LoggerFactory.getLogger(MQReceiver.class);
 		
 		@Autowired
