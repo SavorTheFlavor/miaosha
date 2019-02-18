@@ -91,6 +91,7 @@
 function getMiaoshaPath(){
 	var goodsId = $("#goodsId").val();
 	g_showLoading();
+	//使用ajax获取数据
 	$.ajax({
 		url:"/miaosha/path",
 		type:"GET",
