@@ -32,10 +32,10 @@ public class MiaoShaUserService {
     private static Logger logger = LoggerFactory.getLogger(MiaoShaUserService.class);
 
     @Autowired
-    private MiaoShaUserDao miaoShaUserDao ;
+    private MiaoShaUserDao miaoShaUserDao ; //只能调用自己的DAO
 
     @Autowired
-    private RedisService redisService ;
+    private RedisService redisService ; //不能直接调用别人的DAO，因为可能有缓存需要处理
 
     @Autowired
     private MQSender sender ;
@@ -55,7 +55,7 @@ public class MiaoShaUserService {
     }
 
     public MiaoshaUser getByNickName(String nickName) {
-        /* 对象缓存 */
+        /*  对象缓存  */
         //取缓存
         MiaoshaUser user = redisService.get(MiaoShaUserKey.getByNickName, ""+nickName, MiaoshaUser.class);
         if(user != null) {
@@ -82,8 +82,10 @@ public class MiaoShaUserService {
         toBeUpdate.setNickname(nickName);
         toBeUpdate.setPassword(MD5Utils.formPassToDBPass(formPass, user.getSalt()));
         miaoShaUserDao.update(toBeUpdate);
-        //处理缓存
+        /* 处理缓存 */
+        //删除缓存
         redisService.delete(MiaoShaUserKey.getByNickName, ""+nickName);
+        //更新缓存，不能直接删除，否则会强迫用户下线
         user.setPassword(toBeUpdate.getPassword());
         redisService.set(MiaoShaUserKey.token, token, user);
         return true;
