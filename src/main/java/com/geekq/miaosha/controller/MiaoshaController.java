@@ -89,6 +89,7 @@ public class MiaoshaController implements InitializingBean {
 //		}
 
         //是否已经秒杀到
+        //orderService.getMiaoshaOrderByUserIdGoodsId查的是redis缓存，速度很快
         MiaoshaOrder order = orderService.getMiaoshaOrderByUserIdGoodsId(Long.valueOf(user.getNickname()), goodsId);
         if (order != null) {
             result.withError(REPEATE_MIAOSHA.getCode(), REPEATE_MIAOSHA.getMessage());
