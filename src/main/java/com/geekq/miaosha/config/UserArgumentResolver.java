@@ -11,6 +11,9 @@ import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.method.support.ModelAndViewContainer;
 
+/**
+ * 解析接口中的MiaoshaUser.class参数为UserContext.getUser()中的user
+ */
 @Service
 public class UserArgumentResolver implements HandlerMethodArgumentResolver {
 

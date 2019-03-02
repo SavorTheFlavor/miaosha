@@ -138,6 +138,7 @@ public class MiaoshaController implements InitializingBean {
         return result;
     }
 
+    // 接口限流，5秒钟最多访问5次
     @AccessLimit(seconds = 5, maxCount = 5, needLogin = true)
     @RequestMapping(value = "/path", method = RequestMethod.GET)
     @ResponseBody

@@ -62,9 +62,7 @@ public class AccessInterceptor  extends HandlerInterceptorAdapter{
 					render(response, SESSION_ERROR);
 					return false;
 				}
-				key += "_" + user.getNickname();
-			}else {
-				//do nothing
+				key += "_" + user.getId(); //如需登录则对每个用户分别限流，否则是整体限流
 			}
 			AccessKey ak = AccessKey.withExpire(seconds);
 			Integer count = redisService.get(ak, key, Integer.class);
