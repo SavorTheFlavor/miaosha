@@ -89,6 +89,7 @@ public class MiaoshaController implements InitializingBean {
 //		}
 
         //是否已经秒杀到
+        //orderService.getMiaoshaOrderByUserIdGoodsId查的是redis缓存，速度很快
         MiaoshaOrder order = orderService.getMiaoshaOrderByUserIdGoodsId(Long.valueOf(user.getNickname()), goodsId);
         if (order != null) {
             result.withError(REPEATE_MIAOSHA.getCode(), REPEATE_MIAOSHA.getMessage());
@@ -107,6 +108,7 @@ public class MiaoshaController implements InitializingBean {
             result.withError(MIAO_SHA_OVER.getCode(), MIAO_SHA_OVER.getMessage());
             return result;
         }
+        //秒杀消息入队
         MiaoshaMessage mm = new MiaoshaMessage();
         mm.setGoodsId(goodsId);
         mm.setUser(user);
@@ -204,7 +206,7 @@ public class MiaoshaController implements InitializingBean {
     }
     /**
      * 系统初始化
-     *
+     * implements InitializingBean接口，afterPropertiesSet后spring会自动调用这个方法
      * @throws Exception
      */
     @Override
