@@ -178,6 +178,8 @@ public class MiaoshaController implements InitializingBean {
             return result;
         }
     }
+
+    //生成图形验证码
     @RequestMapping(value = "/verifyCode", method = RequestMethod.GET)
     @ResponseBody
     public ResultGeekQ<String> getMiaoshaVerifyCod(HttpServletResponse response, MiaoshaUser user,

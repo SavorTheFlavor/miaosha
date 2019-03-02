@@ -111,9 +111,9 @@ public class MiaoshaService {
 		g.setFont(new Font("Candara", Font.BOLD, 24));
 		g.drawString(verifyCode, 8, 24);
 		g.dispose();
-		//把验证码存到redis中
 		int rnd = calc(verifyCode);
-		redisService.set(MiaoshaKey.getMiaoshaVerifyCode, user.getNickname()+","+goodsId, rnd);
+		//把验证码存到redis中
+		redisService.set(MiaoshaKey.getMiaoshaVerifyCode, user.getId()+","+goodsId, rnd);
 		//输出图片
 		return image;
 	}
@@ -166,6 +166,11 @@ public class MiaoshaService {
 		return image;
 	}
 
+	/**
+	 * 解析JavaScript代码
+	 * @param exp 数学表达式
+	 * @return
+	 */
 	private static int calc(String exp) {
 		try {
 			ScriptEngineManager manager = new ScriptEngineManager();
@@ -186,7 +191,7 @@ public class MiaoshaService {
 		if(codeOld == null || codeOld - verifyCode != 0 ) {
 			return false;
 		}
-		redisService.delete(MiaoshaKey.getMiaoshaVerifyCode, user.getNickname()+","+goodsId);
+		redisService.delete(MiaoshaKey.getMiaoshaVerifyCode, user.getId()+","+goodsId);
 		return true;
 	}
 
