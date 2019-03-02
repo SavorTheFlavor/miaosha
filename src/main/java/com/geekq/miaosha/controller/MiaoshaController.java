@@ -153,6 +153,8 @@ public class MiaoshaController implements InitializingBean {
             result.withError(REQUEST_ILLEGAL.getCode(), REQUEST_ILLEGAL.getMessage());
             return result;
         }
+        //为每个用户生成其特定的path
+        //每次的url都不一样，防止通过不断调用固定的秒杀地址接口恶意刷单
         String path = miaoshaService.createMiaoshaPath(user, goodsId);
         result.setData(path);
         return result;
